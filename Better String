@@ -1,0 +1,29 @@
+class Solution {
+    
+    int Distinct(const string& s) {
+    const int MOD = 1e9 + 7;
+    int n = s.length();
+    vector<int> dp(n + 1, 0);
+    unordered_map<char, int> lastOccurrence;
+    dp[0] = 1; 
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = (2 * dp[i - 1]) % MOD;
+        if (lastOccurrence.find(s[i - 1]) != lastOccurrence.end()) {
+            dp[i] = (dp[i] - dp[lastOccurrence[s[i - 1]] - 1] + MOD) % MOD;
+        }
+        lastOccurrence[s[i - 1]] = i;
+    }
+    return dp[n] - 1;  
+    }
+  public:
+    string betterString(string str1, string str2) {
+        // code here
+        int count1 = Distinct(str1);
+        int count2 = Distinct(str2);
+        if (count1 >= count2) {
+            return str1;
+        } else {
+            return str2;
+        }
+    }
+};
