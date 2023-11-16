@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isPresent(const vector<string>& nums, const string& candidate) {
+    for (const string& str : nums) {
+        if (str == candidate) {
+            return true;
+        }
+    }
+    return false;
+    }
+    string findDifferentBinaryString(vector<string>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < (1 << n); ++i) {
+        string candidate = "";
+        for (int j = 0; j < n; ++j) {
+            candidate += ((i >> j) & 1) + '0';
+        }
+        if (!isPresent(nums, candidate)) {
+            return candidate;
+        }
+    }
+    return "";
+    }
+};
